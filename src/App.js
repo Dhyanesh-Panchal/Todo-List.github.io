@@ -2,34 +2,34 @@ import React, { useState } from 'react';
 import { Header } from './MyComponents/Header';
 import { Todos } from './MyComponents/Todos';
 import { Footer } from './MyComponents/Footer';
+import { AddTodo } from './MyComponents/AddTodo';
 
 function App() {
   const onDelete = (todo) => {
     console.log("ONDelete function is called for ", todo);
     setTodos(todos.filter((e) => {
       return (e != todo)
-    }))
+    }));
   }
-  const [todos, setTodos] = useState([
-    {
-      Sr: 1,
-      task: "this is task1",
-      desc: "Description of task1"
-    },
-    {
-      Sr: 2,
-      task: "this is task2",
-      desc: "Description of task2"
-    },
-    {
-      Sr: 3,
-      task: "this is task3",
-      desc: "Description of task3"
+  const addTodo = (title, desc) => {
+    console.log("Addtodo Called", title, desc);
+    let sr;
+    (todos.length === 0) ? (sr = 1) :
+      (sr = todos[todos.length - 1].Sr + 1);
+    let myTodo = {
+      Sr: sr,
+      task: title,
+      desc: desc
     }
-  ]);
+    console.log(myTodo);
+    setTodos([...todos, myTodo]);
+  }
+
+  const [todos, setTodos] = useState([]);
   return (
     <>
       <Header title="My Todos" />
+      <AddTodo addTodo={addTodo} />
       <Todos todos={todos} onDelete={onDelete} />
       <Footer />
     </>
